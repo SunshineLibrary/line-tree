@@ -2,7 +2,6 @@
 
 
 class LineTree
-
   attr_reader :to_a
 
   def initialize(lines) @to_a = scan_shift(lines)  end
@@ -14,12 +13,10 @@ class LineTree
   private
 
   def scan_shift(lines)
-
     a = lines.split(/(?=^\S+)/)
 
     a.map do |x|
-
-      rlines = x.split(/\n/)
+      rlines = x.split(/[\r\n]+/)
       label = [rlines.shift]
       new_lines = rlines.map{|x1| x1[2..-1] }
 
@@ -32,7 +29,6 @@ class LineTree
   end
 
   def scan_a(a)
-
     r = a.shift.match(/('[^']+[']|[^\s]+)\s*(\{[^\}]+\})?\s*(.*)/).captures.values_at(0,-1,1)
 
     r[-1] = get_attributes(r.last) if r.last
