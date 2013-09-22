@@ -1,15 +1,15 @@
 #!/usr/bin/env ruby
 
-# file: line-tree.rb
 
-require 'rexle'
-
-class LineTree  
+class LineTree
 
   attr_reader :to_a
 
   def initialize(lines) @to_a = scan_shift(lines)  end
-  def to_xml(options={}) Rexle.new(scan_a(*@to_a)).xml(options) end
+  def to_xml(options={})
+    require 'rexle' if not defined? Rexle
+    Rexle.new(scan_a(*@to_a)).xml(options)
+  end
 
   private
 
@@ -21,7 +21,7 @@ class LineTree
 
       rlines = x.split(/\n/)
       label = [rlines.shift]
-      new_lines = rlines.map{|x| x[2..-1]}
+      new_lines = rlines.map{|x1| x1[2..-1] }
 
       if new_lines.length > 1 then
         label + scan_shift(new_lines.join("\n")) 
@@ -36,7 +36,7 @@ class LineTree
     r = a.shift.match(/('[^']+[']|[^\s]+)\s*(\{[^\}]+\})?\s*(.*)/).captures.values_at(0,-1,1)
 
     r[-1] = get_attributes(r.last) if r.last
-    a.map {|x| r << scan_a(x.clone) } if a.is_a? Array  
+    a.map {|x| r << scan_a(x.clone) } if a.is_a? Array
     r
   end
 
