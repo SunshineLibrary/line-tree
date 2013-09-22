@@ -24,7 +24,7 @@ class LineTree
       new_lines = rlines.map{|x1| x1[2..-1] }
 
       if new_lines.length > 1 then
-        label + scan_shift(new_lines.join("\n")) 
+        label + scan_shift(new_lines.join("\n"))
       else
         new_lines.length > 0 ? label + [new_lines] : label
       end
